@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
         };
         
         if(name){
-        let names = name.split(" ");
+        let names = name.split(" "); // professor X ---> "Professor" "X"
         allNames = new Array();
         names.forEach(element => {
          allNames.push({name: {$regex : String(capitalize(element))}}, {alias: {$regex : String(capitalize(element))}});
@@ -65,6 +65,7 @@ router.get('/', async (req, res) => {
 //Upload POST
 router.post('/', async (req,res) => {
     const character = new Character({
+        id: req.body.id,
         name: req.body.name,
         alias: req.body.alias,
         description: req.body.description,
@@ -89,7 +90,7 @@ router.get('/:characterID', async (req, res) => {
         const query = {
             id:req.params.characterID
         }
-        const characters = await Character.findOne(query,{_id:0, __v:0}).lean(); // (query, options);
+        const characters = await Character.findOne(query,{_id:0, __v:0}).lean(); 
         res.json(characters);
     } 
     catch(err) {
